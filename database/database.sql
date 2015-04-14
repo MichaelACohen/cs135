@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS db;
 CREATE DATABASE db;
 
 USE db;
-
+--testing git
 --added role just in case
 CREATE TABLE Users (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
