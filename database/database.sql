@@ -12,7 +12,7 @@ CREATE TABLE Users (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	display_name text NOT NULL,
 	username VARCHAR(32) NOT NULL UNIQUE,
-	password VARCHAR(32) NOT NULL,
+	password VARCHAR(128) NOT NULL,
 	role ENUM('user', 'administrator') NOT NULL
 ) ENGINE=InnoDB;
 

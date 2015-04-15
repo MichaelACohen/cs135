@@ -1,4 +1,5 @@
 <?php
+ 
 require_once '../database/db_info.php';
 
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -7,9 +8,10 @@ if ($conn->connect_error) die($conn->connect_error);
 
 session_start();
 if (isset($_SESSION['id'])) {
+   
   //user is already logged in
   //redirect them to home page
-} else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+} else if ($_SERVER["REQUEST_METHOD"] == "POST") { // this line is messing it up for me because $_SERVER["REQUEST_METHOD"]  is always GET.... 
   $username = validate($_POST["username"]);
   $password = validate($_POST["password"]);
 
@@ -20,7 +22,9 @@ if (isset($_SESSION['id'])) {
   $query = "SELECT * FROM Users WHERE username='$username'";
   $result = $conn->query($query);
 
+
   if (!$result) {
+     
     die($conn->error);
   } else if ($result->num_rows) {
     $row = $result->fetch_array(MYSQLI_NUM);
@@ -29,6 +33,7 @@ if (isset($_SESSION['id'])) {
     $salt      = "qm&h*";
     $pepper    = "pg!@";
     $encryptPW = hash('ripemd128', "$salt$password$pepper");
+    echo $encryptPW;
 
     if ($encryptPW == $row[2]) {
       $_SESSION['id']       = $row[0];
