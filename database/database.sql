@@ -6,7 +6,6 @@ GRANT ALL PRIVILEGES ON db.* to root@localhost IDENTIFIED BY 'michael';
 
 USE db;
 
-#testing git
 #added role just in case
 
 CREATE TABLE Users (
