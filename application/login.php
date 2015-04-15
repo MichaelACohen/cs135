@@ -33,7 +33,8 @@ if (isset($_SESSION['id'])) {
     $encryptPW = hash('ripemd128', "$salt$password$pepper");
 
     if ($encryptPW == $row[3]) {
-      $_SESSION['id']       = $row[0];
+      $_SESSION['id'] = $row[0];
+      $_SESSION['displayName'] = $row[1];
 
       //redirect to home page here
     } else {

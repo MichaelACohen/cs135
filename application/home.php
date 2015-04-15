@@ -1,3 +1,7 @@
+<?php
+require_once 'loginStatus.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

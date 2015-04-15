@@ -3,8 +3,9 @@
 $menu = array(
 	'home' => array('text' => 'Home', 'url' => 'home.php'),
 	'profile' => array('text' => 'My Profile', 'url' => '#'),
-	'following' => array('text' => 'Following', 'url'=>'#'),
-	'followers' => array('text' => 'Followers', 'url'=> '#')
+	'following' => array('text' => 'Following', 'url'=>'following.php'),
+	'followers' => array('text' => 'Followers', 'url'=> 'followers.php'),
+	'logout' => array('text' => 'Log Out', 'url' => '#')
 );
 
 function generateNavBar($items) {
@@ -12,7 +13,7 @@ function generateNavBar($items) {
 	foreach($items as $key => $item) {
 		$html .= "<a href='{$item['url']}'>{$item['text']}</a>\n";
 	}
-	//$html .= "<span>Logged in as " . $_SESSION['username'] . "</span>";
+	$html .= "<span style='float:right'>Logged in as " . $_SESSION['displayName'] . "</span>";
 	$html .= "</nav>";
 	return $html;
 }
