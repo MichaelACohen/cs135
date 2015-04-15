@@ -1,8 +1,6 @@
 <?php
 require_once '../database/db_info.php';
-
 $conn = new mysqli($hn, $un, $pw, $db);
-
 if ($conn->connect_error) die($conn->connect_error);
 
 session_start();
@@ -10,10 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $displayname = validate($_POST["displayname"]);
   $username    = validate($_POST["username"]);
   $password    = validate($_POST["password"]);
-
-  require_once '../database/db_info.php';
-  $conn = new mysqli($hn, $un, $pw, $db);
-  if ($conn->connect_error) die($conn->connect_error);
 
   $query = "SELECT EXISTS(SELECT 1 FROM Users WHERE username='$username')";
   $result = $conn->query($query);
@@ -28,8 +22,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "username already taken";
       //show error message or something
     } else {
-      echo "create account";
-      //insert user account into db here
+      $salt   = "qm&h*";
+      $pepper = "pg!@";
+      $encryptPW = hash('ripemd128', "$salt$password$pepper");
+      $query = "INSERT INTO Users (display_name, username, password, role) Values ('$displayname', '$username', '$encryptPW', 'user')";
+      $result = $conn->query($query);
+      if (!$result) die($conn->error);
+
+      $conn->close();
+
+      //do something here like...
+      //1) reload this page w message saying "Account created" or something
+      //2) redirect to login page
     }
   }
 } else {
