@@ -22,6 +22,7 @@ if ($rows) {
 		$username = $result->fetch_assoc()['username'];
 
 		//display all the info in a table or something
+	}
 } else {
 	//you aren't following anyone
 }
