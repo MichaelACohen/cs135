@@ -2,7 +2,7 @@
 
 $menu = array(
 	'home' => array('text' => 'Home', 'url' => 'home.php'),
-	'profile' => array('text' => 'My Profile', 'url' => '#'),
+	'profile' => array('text' => 'My Profile', 'url' => 'profile.php'),
 	'following' => array('text' => 'Following', 'url'=>'following.php'),
 	'followers' => array('text' => 'Followers', 'url'=> 'followers.php'),
 	'logout' => array('text' => 'Log Out', 'url' => 'logout.php')
