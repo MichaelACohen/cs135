@@ -8,8 +8,7 @@ if ($conn->connect_error) die($conn->connect_error);
 session_start();
 
 if (isset($_SESSION['id'])) {
-  //user is already logged in
-  //redirect them to home page
+  redirectToHome();
 
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $username = validate($_POST["username"]);
@@ -36,7 +35,7 @@ if (isset($_SESSION['id'])) {
       $_SESSION['id'] = $row[0];
       $_SESSION['displayName'] = $row[1];
 
-      //redirect to home page here
+      redirectToHome();
     } else {
       $_SESSION['error'] = 'Incorrect username/password combination';
       header('Location: ' . $_SERVER['PHP_SELF']);
@@ -89,6 +88,11 @@ if (isset($_SESSION['error'])) {
 ?>
 
 <?php
+
+function redirectToHome() {
+  $path = str_replace('login.php', 'home.php', $_SERVER['PHP_SELF']);
+  header('Location: ' . $path);
+}
 
 function validate($data) {
   return htmlspecialchars(stripslashes(trim($data)));
