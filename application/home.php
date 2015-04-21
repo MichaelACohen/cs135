@@ -12,6 +12,6 @@ require_once 'loginStatus.php';
 
 	<h2>Home Page</h2>
 
-	<p>Welcome to you home page <?php echo $_SESSION['displayName']; ?>. </p>
+	<p>Welcome to your home page, <?php echo $_SESSION['displayName']; ?>. </p>
 </body>
 </html>
