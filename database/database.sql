@@ -18,13 +18,13 @@ CREATE TABLE Users (
 
 CREATE TABLE Videos (
 	vid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	url VARCHAR(100) NOT NULL UNIQUE
+	youtubeID VARCHAR(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
-#this should have a timestamp also (so we know when user added it to his/her feed)
 CREATE TABLE VideoFeed (
 	userID INT UNSIGNED NOT NULL,
 	videoID INT UNSIGNED NOT NULL,
+	datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (userID, videoID),
 	FOREIGN KEY (userID)
 		REFERENCES Users(id),
@@ -52,26 +52,27 @@ CREATE TABLE VideoHashtags (
 		REFERENCES Hashtags(hid)
 ) ENGINE=InnoDB;
 
-#this needs to have userID of the person who uploaded the video as well
-#could have multiple people upload the same video and then we wouldn't know
-#which video the person liked (if that makes any sense)
-#NOTE: need to add the same thing for comments as well
 CREATE TABLE Likes (
-	userID INT UNSIGNED NOT NULL,
+	videoOwner INT UNSIGNED NOT NULL,
+	liker INT UNSIGNED NOT NULL,
 	videoID INT UNSIGNED NOT NULL,
-	PRIMARY KEY (userID, videoID),
-	FOREIGN KEY (userID)
+	PRIMARY KEY (liker, videoOwner, videoID),
+	FOREIGN KEY (liker)
+		REFERENCES Users(id),
+	FOREIGN KEY (videoOwner)
 		REFERENCES Users(id),
 	FOREIGN KEY (videoID)
 		REFERENCES Videos(vid)
 ) ENGINE=InnoDB;
 
-#Check Robin's nest example to see if this should have primary key
 CREATE TABLE Comments (
-	userID INT UNSIGNED NOT NULL,
+	commenter INT UNSIGNED NOT NULL,
+	videoOwner INT UNSIGNED NOT NULL,
 	videoID INT UNSIGNED NOT NULL,
 	message TEXT,
-	FOREIGN KEY (userID)
+	FOREIGN KEY (commenter)
+		REFERENCES Users(id),
+	FOREIGN KEY (videoOwner)
 		REFERENCES Users(id),
 	FOREIGN KEY (videoID)
 		REFERENCES Videos(vid)
