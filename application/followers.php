@@ -19,31 +19,30 @@ $id = $_SESSION['id'];
 </head>
 <body>
 	<?php require_once 'navBar.php' ?>
-        <?php 
-        $query = "SELECT Users.display_name, Users.username FROM Follows, Users WHERE Follows.followeeID = '$id' AND Users.id = Follows.followerID";
-        $result = $conn->query($query);
-        if (!$result) die($conn->error);
+    <?php
+    $query = "SELECT Users.display_name, Users.username FROM Follows, Users WHERE Follows.followeeID = '$id' AND Users.id = Follows.followerID";
+    $result = $conn->query($query);
+    if (!$result) die($conn->error);
 
-        $rows = $result->num_rows;
-        if ($rows) {
-            echo 'These are the people you are following!';
-            echo '<ul>';
-            for ($i = 0; $i < $rows; ++$i) {
-		$result->data_seek($i);
-		$display_name = $result->fetch_assoc()['display_name'];
+    $rows = $result->num_rows;
+    if ($rows) {
+        echo 'These are the people you are following!';
+        echo '<ul>';
+        for ($i = 0; $i < $rows; ++$i) {
+			$result->data_seek($i);
+			$display_name = $result->fetch_assoc()['display_name'];
 
-		$result->data_seek($i);
-		$username = $result->fetch_assoc()['username'];
-                echo '<li>'.$display_name.' ('.$username.')'.'</li>';
-                echo '</ul>';
-		
-        }
-        } else {
-	//no one is following you
-        }
-
-        $result->close();
-        $conn->close();
-        ?>
+			$result->data_seek($i);
+			$username = $result->fetch_assoc()['username'];
+            echo '<li>'.$display_name.' ('.$username.')'.'</li>';
+            echo '</ul>';
+		}
+    } else {
+    	//no followers
+    	echo "no one likes you.";
+    }
+    $result->close();
+    $conn->close();
+    ?>
 </body>
 </html>
