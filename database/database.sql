@@ -21,6 +21,7 @@ CREATE TABLE Videos (
 	url VARCHAR(100) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
+#this should have a timestamp also (so we know when user added it to his/her feed)
 CREATE TABLE VideoFeed (
 	userID INT UNSIGNED NOT NULL,
 	videoID INT UNSIGNED NOT NULL,
@@ -51,6 +52,10 @@ CREATE TABLE VideoHashtags (
 		REFERENCES Hashtags(hid)
 ) ENGINE=InnoDB;
 
+#this needs to have userID of the person who uploaded the video as well
+#could have multiple people upload the same video and then we wouldn't know
+#which video the person liked (if that makes any sense)
+#NOTE: need to add the same thing for comments as well
 CREATE TABLE Likes (
 	userID INT UNSIGNED NOT NULL,
 	videoID INT UNSIGNED NOT NULL,
