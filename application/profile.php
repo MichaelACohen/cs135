@@ -94,8 +94,6 @@ if($_POST){
 <body>
     <?php require_once 'navBar.php' ?>
     <?php
-        echo $id;
-        echo $_SESSION['id'];
         if ($id == $_SESSION['id']){
              echo 
              "Here is your profile, ".$_SESSION['displayName']."<br>"
@@ -113,7 +111,6 @@ if($_POST){
         else{
             echo "<center><h4> Welcome to ".$display_name." (".$username.")'s profile</h4></center> <div id=\"vidList\">";
         }
-        echo $id;
         $query = "SELECT * FROM VideoFeed WHERE userID='$id'";
         $BASE_URL = "https://www.youtube.com/embed/";
         $query = "SELECT youtubeID,vid FROM Videos, VideoFeed WHERE userID='$id' AND Videos.vid=VideoFeed.videoID";
