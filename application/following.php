@@ -10,22 +10,31 @@ $id = $_SESSION['id'];
 
 //add followers
 if($_POST){
-    if($_POST['toFollow']){
-        $followee = validate($_POST['toFollow']);
-        $query = "SELECT id from Users WHERE username='$followee'";
-        $result = $conn->query($query);
-        if (!$result) die($conn->error);
+    if(isset($_POST['toFollow'])){
+        if($_POST['toFollow']){
+            $followee = validate($_POST['toFollow']);
+            $query = "SELECT id from Users WHERE username='$followee'";
+            $result = $conn->query($query);
+            if (!$result) die($conn->error);
 
-        $rows = $result->num_rows;
-        if ($rows) {
-            for ($i = 0; $i < $rows; ++$i) {
-                    $result->data_seek($i);
-                    $followeeID = $result->fetch_assoc()['id'];
+            $rows = $result->num_rows;
+            if ($rows) {
+                for ($i = 0; $i < $rows; ++$i) {
+                        $result->data_seek($i);
+                        $followeeID = $result->fetch_assoc()['id'];
+                }
             }
+            $query = "INSERT into Follows(followerID,followeeID) VALUES ('$id','$followeeID')";
+            $conn->query($query);
+            if (!$result) die($conn->error);
         }
-        $query = "INSERT into Follows(followerID,followeeID) VALUES ('$id','$followeeID')";
-        $conn->query($query);
-        if (!$result) die($conn->error);
+    }
+     if(isset($_POST['unfollowID'])){
+        if($_POST['unfollowID']){
+            $unfollowID = validate($_POST['unfollowID']);
+            $query = "DElETE from Follows WHERE followeeID='$unfollowID'";
+            $conn->query($query);
+        }
     }
 }
 
@@ -40,7 +49,7 @@ if($_POST){
 	<?php require_once 'navBar.php' ?>
                 
         <?php 
-        $query = "SELECT Users.display_name, Users.username FROM Follows, Users WHERE Follows.followerID = '$id' AND Users.id = Follows.followeeID";
+        $query = "SELECT Users.display_name, Users.id ,Users.username FROM Follows, Users WHERE Follows.followerID = '$id' AND Users.id = Follows.followeeID";
         $result = $conn->query($query);
         if (!$result) die($conn->error);
 
@@ -54,8 +63,12 @@ if($_POST){
 
 		$result->data_seek($i);
 		$username = $result->fetch_assoc()['username'];
+                $result->data_seek($i);
+                $followeeID=$result->fetch_assoc()['id'];
 		//display all the info in a table or something
-                echo '<li>'.$display_name.' ('.$username.')'.'</li>';
+                echo '<li><a href=\'profile.php?profID='.$followeeID.'\'>'.$display_name.'</a>('.$username.')';
+                echo "<form method=\"post\"><input type='hidden' name='unfollowID' value='$followeeID'/>";
+                echo "<input type='submit' value='Unfollow'/></form></li>";
             }	
             echo '</ul>';
         } else {
@@ -66,7 +79,7 @@ $result->close();
 $conn->close();
      
 ?>
-        <form method="post">
+        <form method="post" >
             <table>
                 <tr>
                 <td><input type="text" name="toFollow"/></td>
