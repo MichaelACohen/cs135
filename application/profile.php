@@ -70,8 +70,8 @@ if($_POST){
             </iframe>
         </div>
         <?php
-            $id = $_SESSION['id'];
-            $query = "SELECT * FROM VideoFeed WHERE userID='$id'";
+            $BASE_URL = "https://www.youtube.com/embed/";
+            $query = "SELECT youtubeID FROM Videos, VideoFeed WHERE userID='$id' AND Videos.vid=VideoFeed.videoID";
             $result = $conn->query($query);
             if (!$result) {
                 die($conn->error);
@@ -80,9 +80,11 @@ if($_POST){
                 if ($rows) {
                     for ($i = 0; $i < $rows; ++$i) {
                         $result->data_seek($i);
-                        $url = $result->fetch_assoc()['url'];
-                        echo '<iframe width="420" height="315"
-                        src=$id frameborder="0" allowfullscreen></iframe>';
+                        $youtubeID = $result->fetch_assoc()['youtubeID'];
+                        $url = $BASE_URL . $youtubeID;
+                        echo "<div class='videoWrapper'>";
+                        echo "<iframe width='420' height='315' src='$url' frameborder='0' allowfullscreen></iframe>";
+                        echo "</div>";
                     }
                 }
                 $result->close();
