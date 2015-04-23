@@ -28,6 +28,7 @@ if($_POST){
 <html lang="en">
 <head>
 	<title>Followers</title>
+    <?php require_once 'includes.php' ?>
 </head>
 <body>
     <?php require_once 'navBar.php' ?>

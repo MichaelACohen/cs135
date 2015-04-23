@@ -43,7 +43,8 @@ if($_POST){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>Following</title>
+    <title>Following</title>
+    <?php require_once 'includes.php' ?>
 </head>
 <body>
 	<?php require_once 'navBar.php' ?>

@@ -81,6 +81,7 @@ if($_POST){
 <html lang="en">
 <head>
     <title>Profile</title>
+    <?php require_once 'includes.php' ?>
     <style>
         #vidList {
             text-align:center;
@@ -111,9 +112,9 @@ if($_POST){
         else{
             echo "<center><h4> Welcome to ".$display_name." (".$username.")'s profile</h4></center> <div id=\"vidList\">";
         }
-        $query = "SELECT * FROM VideoFeed WHERE userID='$id'";
         $BASE_URL = "https://www.youtube.com/embed/";
-        $query = "SELECT youtubeID,vid FROM Videos, VideoFeed WHERE userID='$id' AND Videos.vid=VideoFeed.videoID";
+        //orders by most recent
+        $query = "SELECT youtubeID,vid FROM Videos, VideoFeed WHERE userID='$id' AND Videos.vid=VideoFeed.videoID ORDER BY datetime desc";
         $result = $conn->query($query);
         if (!$result) {
             die($conn->error);
@@ -136,9 +137,9 @@ if($_POST){
                 }
             }
         }
-            $result->close();
-            $conn->close();
-        ?>
+        $result->close();
+        $conn->close();
+    ?>
             
     </div>
     </body>
