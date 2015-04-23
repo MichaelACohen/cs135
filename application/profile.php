@@ -5,27 +5,8 @@ $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
 
 $id = $_SESSION['id'];
-
-if($_GET){
-    if($_GET['profID']){
-        $profID=validate($_GET['profID']);
-        $id=$profID;
-        $query = "SELECT display_name, username FROM Users WHERE id='$id'";
-        $result = $conn->query($query);
-        if (!$result) {
-            die($conn->error);
-        } else {
-           $rows = $result->num_rows;
-            if ($rows) {
-                 $result->data_seek(0);
-                 $display_name = $result->fetch_assoc()['display_name'];
-                 $result->data_seek(0);
-                 $username = $result->fetch_assoc()['username'];
-            }
-            $result->close();
-        }
-    }
-}
+$display_name = $_SESSION['displayName'];
+$username = "";
 
 if($_POST){
     if($_POST['vidurl']){
@@ -72,7 +53,27 @@ if($_POST){
         }
         $result->close();
    }
+} else if($_GET){
+    if($_GET['profID']){
+        $profID=validate($_GET['profID']);
+        $id=$profID;
+        $query = "SELECT display_name, username FROM Users WHERE id='$id'";
+        $result = $conn->query($query);
+        if (!$result) {
+            die($conn->error);
+        } else {
+           $rows = $result->num_rows;
+            if ($rows) {
+                $result->data_seek(0);
+                $display_name = $result->fetch_assoc()['display_name'];
+                $result->data_seek(0);
+                $username = $result->fetch_assoc()['username'];
+            }
+            $result->close();
+        }
+    }
 }
+
 ?>
 
 
@@ -92,7 +93,9 @@ if($_POST){
 </head>
 <body>
     <?php require_once 'navBar.php' ?>
-    <?php 
+    <?php
+        echo $id;
+        echo $_SESSION['id'];
         if ($id == $_SESSION['id']){
              echo 
              "Here is your profile, ".$_SESSION['displayName']."<br>"
@@ -110,35 +113,35 @@ if($_POST){
         else{
             echo "<center><h4> Welcome to ".$display_name." (".$username.")'s profile</h4></center> <div id=\"vidList\">";
         }
-            
-            $query = "SELECT * FROM VideoFeed WHERE userID='$id'";
-            $BASE_URL = "https://www.youtube.com/embed/";
-            $query = "SELECT youtubeID,vid FROM Videos, VideoFeed WHERE userID='$id' AND Videos.vid=VideoFeed.videoID";
-            $result = $conn->query($query);
-            if (!$result) {
-                die($conn->error);
-            } else {
-                $rows = $result->num_rows;
-                if ($rows) {
-                    for ($i = 0; $i < $rows; ++$i) {
-                        $result->data_seek($i);
-                        $youtubeID = $result->fetch_assoc()['youtubeID'];
-                        $result->data_seek($i);
-                        $videoID=$result->fetch_assoc()['vid'];
-                        $url = $BASE_URL . $youtubeID;
-                        echo "<div class='videoWrapper'>";
-                        echo "<iframe width='420' height='315' src='$url' frameborder='0' allowfullscreen></iframe>";
-                        if($_SESSION['id']=$id){
-                            echo "<form method=\"post\"><input type='hidden' name='deleteID' value='$videoID'/>";
-                            echo "<input type='submit' value='Delete'/></form>";
-                        }
-                        echo "</div>";
+        echo $id;
+        $query = "SELECT * FROM VideoFeed WHERE userID='$id'";
+        $BASE_URL = "https://www.youtube.com/embed/";
+        $query = "SELECT youtubeID,vid FROM Videos, VideoFeed WHERE userID='$id' AND Videos.vid=VideoFeed.videoID";
+        $result = $conn->query($query);
+        if (!$result) {
+            die($conn->error);
+        } else {
+            $rows = $result->num_rows;
+            if ($rows) {
+                for ($i = 0; $i < $rows; ++$i) {
+                    $result->data_seek($i);
+                    $youtubeID = $result->fetch_assoc()['youtubeID'];
+                    $result->data_seek($i);
+                    $videoID=$result->fetch_assoc()['vid'];
+                    $url = $BASE_URL . $youtubeID;
+                    echo "<div class='videoWrapper'>";
+                    echo "<iframe width='420' height='315' src='$url' frameborder='0' allowfullscreen></iframe>";
+                    if($_SESSION['id']==$id){
+                        echo "<form method=\"post\"><input type='hidden' name='deleteID' value='$videoID'/>";
+                        echo "<input type='submit' value='Delete'/></form>";
                     }
+                    echo "</div>";
                 }
             }
-                $result->close();
-                $conn->close();
-            ?>
+        }
+            $result->close();
+            $conn->close();
+        ?>
             
     </div>
     </body>
