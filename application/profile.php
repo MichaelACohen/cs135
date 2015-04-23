@@ -30,7 +30,7 @@ if($_GET){
 if($_POST){
     if($_POST['vidurl']){
         $url = validate($_POST['vidurl']);
-        $query = "SELECT * FROM Videos WHERE url='$url'";
+        $query = "SELECT * FROM Videos WHERE youtubeID='$url'";
         $result = $conn->query($query);
         if (!$result) {
             die($conn->error);
@@ -58,7 +58,7 @@ if($_POST){
             }
             else {
                 //put video in Videos
-                $query = "INSERT INTO Videos (vid,url) Values (null,'$url')";
+                $query = "INSERT INTO Videos (vid,youtubeID) Values (null,'$url')";
                 $result2 = $conn->query($query);
                 $insertid = $conn->insert_id;
                 if (!$result2) {die($conn->error);}
@@ -111,8 +111,9 @@ if($_POST){
             echo "<center><h4> Welcome to ".$display_name." (".$username.")'s profile</h4></center> <div id=\"vidList\">";
         }
             
-            //$id = $_SESSION['id'];
             $query = "SELECT * FROM VideoFeed WHERE userID='$id'";
+            $BASE_URL = "https://www.youtube.com/embed/";
+            $query = "SELECT youtubeID,vid FROM Videos, VideoFeed WHERE userID='$id' AND Videos.vid=VideoFeed.videoID";
             $result = $conn->query($query);
             if (!$result) {
                 die($conn->error);
@@ -121,36 +122,26 @@ if($_POST){
                 if ($rows) {
                     for ($i = 0; $i < $rows; ++$i) {
                         $result->data_seek($i);
-                        $videoID = $result->fetch_assoc()['videoID'];
-                        $query = "SELECT * FROM Videos WHERE vid='$videoID'";
-                        $result2 = $conn->query($query);
-                        if (!$result2) {
-                            die($conn->error);
-                        } else {
-                            $rows2 = $result2->num_rows;
-                            if ($rows2) {
-                                for ($j = 0; $j < $rows2; ++$j) {
-                                    $result2->data_seek($j);
-                                    $url=$result2->fetch_assoc()['url'];
-                                }
-                                echo '<div class="videoWrapper"> <iframe width="420" height="315"
-                                    src="https://www.youtube.com/embed/'.$url;
-                                echo'" frameborder="0" allowfullscreen></iframe>';
-                                echo "<form method=\"post\"><input type='hidden' name='deleteID' value='$videoID'/>";
-                                echo "<input type='submit' value='Delete'/></form></div>";
-                            }
-                            
+                        $youtubeID = $result->fetch_assoc()['youtubeID'];
+                        $result->data_seek($i);
+                        $videoID=$result->fetch_assoc()['vid'];
+                        $url = $BASE_URL . $youtubeID;
+                        echo "<div class='videoWrapper'>";
+                        echo "<iframe width='420' height='315' src='$url' frameborder='0' allowfullscreen></iframe>";
+                        if($_SESSION['id']=$id){
+                            echo "<form method=\"post\"><input type='hidden' name='deleteID' value='$videoID'/>";
+                            echo "<input type='submit' value='Delete'/></form>";
                         }
-                        $result2->close();
+                        echo "</div>";
                     }
                 }
             }
                 $result->close();
                 $conn->close();
+            ?>
             
-        ?>
     </div>
-</body>
+    </body>
 
 <?php
 function validate($data) {
