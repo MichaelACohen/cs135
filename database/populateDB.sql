@@ -2,25 +2,25 @@
 INSERT INTO Users (
 	display_name, username, password, role
 ) VALUES (
-	"Michael", "michael", "michael", "user"	
+	"Michael", "michael", "1103c2be9d0858276e150bcd4ee477a7", "user"
 );
 
 INSERT INTO Users (
 	display_name, username, password, role
 ) VALUES (
-	"Sallie", "sallie", "sallie", "user"	
+	"Sallie", "sallie", "208d48c84294fb3153b2057d7f9728f1", "user"
 );
 
 INSERT INTO Users (
 	display_name, username, password, role
 ) VALUES (
-	"Kenton", "kenton", "kenton", "user"	
+	"Kenton", "kenton", "861519ea36b8a80457d7e685b14d66da", "user"
 );
 
 INSERT INTO Users (
 	display_name, username, password, role
 ) VALUES (
-	"Connor", "connor", "connor", "user"	
+	"Connor", "connor", "37180c909687e65862382e078f95c02e", "user"
 );
 
 #videos
