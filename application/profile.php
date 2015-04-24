@@ -83,6 +83,18 @@ if($_POST){
     <title>Profile</title>
     <?php require_once 'includes.php' ?>
     <style>
+        #header {
+            width:100%;
+            height:50px;
+            top:0;
+        }
+        #container {
+            width:100%;
+            position:fixed;
+            top:50px;
+            bottom: 0;
+            overflow: auto;
+        }
         #vidList {
             text-align:center;
         }
@@ -93,7 +105,10 @@ if($_POST){
     </style>
 </head>
 <body>
+    <div id="header">
     <?php require_once 'navBar.php' ?>
+    </div>
+    <div id="container">
     <?php
         if ($id == $_SESSION['id']){
              echo 
@@ -137,6 +152,7 @@ if($_POST){
                 }
             }
         }
+        echo "</div>";
         $result->close();
         $conn->close();
     ?>
