@@ -79,6 +79,7 @@ CREATE TABLE Comments (
 	videoOwner INT UNSIGNED NOT NULL,
 	videoID INT UNSIGNED NOT NULL,
 	message TEXT,
+	datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (commenter)
 		REFERENCES Users(id),
 	FOREIGN KEY (videoOwner)
