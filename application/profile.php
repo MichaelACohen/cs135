@@ -54,7 +54,7 @@ if($_POST){
                     }
                 }
 
-                //$result2->close();
+                $result2->close();
             }
             else {
                 //put video in Videos
@@ -66,8 +66,8 @@ if($_POST){
                 $query = "INSERT INTO VideoFeed (userID,videoID) Values ($id, $insertid)";
                 $result3 = $conn->query($query);
                 if (!$result) {die($conn->error);}
-//                $result2->close();
-//                $result3->close();
+                $result2->close();
+                $result3->close();
             }
         }
         $result->close();
