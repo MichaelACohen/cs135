@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
 <title>Create Account</title>
-
+<?php require_once 'includes.php' ?>
 <style type="text/css">
 .error {
   color:red;

@@ -51,7 +51,7 @@ if (isset($_SESSION['id'])) {
 
 <head>
 <title>Log In</title>
-
+<?php require_once 'includes.php' ?>
 <style type="text/css">
 .error {
   color:red;

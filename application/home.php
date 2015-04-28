@@ -6,6 +6,7 @@ require_once 'loginStatus.php';
 <html lang="en">
 <head>
 	<title>Home Page</title>
+	<?php require_once 'includes.php' ?>
 </head>
 <body>
 	<?php require_once 'navBar.php' ?>
