@@ -313,8 +313,8 @@ function displayVideo($index, $video) {
     echo "<div class='postComment'>";
     echo "<form style='display:inline-block;width:100%;margin:0;padding:0' id='commentForm$index' method='post'>";
     echo "<input type='hidden' name='vid' value='{$video['vid']}'></input>";
-    echo "<textarea form='commentForm$index' name='comment' class='commentText' placeholder='Write a comment...'></textarea>";
-    echo "<input style='float:right;' type='submit' value='Comment!'></input>";
+    echo "<textarea form='commentForm$index' name='comment' class='commentText form-control' placeholder='Write a comment...'></textarea>";
+    echo "<button type='submit' class='btn btn-default' style='float:right;margin-top:5px;' type='submit'>Comment!</input>";
     echo "</form>";
     echo "</div>";
     echo "</div>";    
