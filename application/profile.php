@@ -4,6 +4,7 @@ require_once '../database/db_info.php';
 $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
 $id = $_GET ? ($_GET['profID'] ? $_GET['profID'] : $_SESSION['id']) : $_SESSION['id'];
+$error = "";
 if ($_POST) {
     //if comment
     if (isset($_POST['comment'])) {
@@ -14,7 +15,7 @@ if ($_POST) {
         $result = $conn->query($query);
         if (!$result) die($conn->error);
     //if like
-    } else {
+    } else if (isset($_POST['unlike'])) {
         //$like = 1 if like, 0 if unlike
         $like = !$_POST['unlike'];
         $vid = $_POST['id'];
@@ -26,6 +27,14 @@ if ($_POST) {
         } else {
             $query = "DELETE FROM Likes WHERE videoOwner = '$id' AND liker = '$liker' AND videoID = '$vid'";
             $result = $conn->query($query);
+        }
+    } else if (isset($_POST['youtubeID'])) {
+        $youtubeID = $_POST['youtubeID'];
+        if (validYoutubeID($youtubeID)) {
+            $query = "INSERT INTO VideoFeed (userID, videoID) VALUES ('$id', '$youtubeID')";
+            $conn->query($query);
+        } else {
+            $error = "Sorry, that is not a valid Youtube video ID.";
         }
     }
 }
@@ -96,11 +105,17 @@ for ($i = 0; $i < $rows; ++$i) {
         #top {
             width:100%;
             height: 50px;
+            line-height:50px;
+            text-align:center;
+        }
+        #top span {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: normal;
         }
         #left {
             width: 30%;
             float:left;
-            text-align:center;
             background-color:#F5F5F5;      
         }
         #middle {
@@ -140,6 +155,10 @@ for ($i = 0; $i < $rows; ++$i) {
             margin-bottom:-5px;
             /* to create a gap between video and comments: margin-bottom: 10px;*/
         }
+        #error {
+            color:red;
+            margin-bottom:-10px;
+        }
     </style>
     <script src="../javascripts/jquery.autoresize.js"></script>
     <script>
@@ -169,10 +188,33 @@ for ($i = 0; $i < $rows; ++$i) {
     <div id="header">
     <?php require_once 'navBar.php' ?>
     </div>
-    <div id="top"></div>
-    <div id="left">
-        <!-- <p id="blah">Michael's video</p> -->
+    <div id="top">
+        <?php
+            if ($id != $_SESSION['id']) {
+                $query = "SELECT display_name FROM Users WHERE id='$id'";
+                $result = $conn->query($query);
+                if (!$result) {
+                    die($conn->error);
+                } else if ($result->num_rows) {
+                    $row = $result->fetch_array(MYSQLI_NUM);
+                    echo "<span>Welcome to $row[0]'s profile page.</span>";
+                }
+                $result->close();
+            } else {
+                if (strlen($error)) {
+                    echo "<script>$('#top').height('100px');</script>";
+                    echo "<span id='error'>$error</span>";
+                }
+                echo "<form class='form-inline' method='post'>";
+                echo "<div class='form-group'>";
+                echo "<label for='videoIDinput'>New video</label><input style='margin-left:5px;' class='form-control' type='text' id='videoIDinput' name='youtubeID' placeholder='Youtube video ID...'>";
+                echo "<button type='submit' class='btn btn-default' method='post'>Add</button>";
+                echo "</div>";
+                echo "</form>";
+            }
+        ?>
     </div>
+    <div id="left"></div>
     <div id="middle">
         <?php
             foreach($videos as $index => $video) {
@@ -186,6 +228,14 @@ for ($i = 0; $i < $rows; ++$i) {
 <?php
 function validate($data) {
   return htmlspecialchars(stripslashes(trim($data)));
+}
+function validYoutubeID($id){
+    $id = trim($id);
+    if (strlen($id) === 11){
+        $file = @file_get_contents('http://gdata.youtube.com/feeds/api/videos/'.$id);
+        return !!$file;
+    }
+    return false;
 }
 function displayVideo($index, $video) {
     $id = $_GET ? ($_GET['profID'] ? $_GET['profID'] : $_SESSION['id']) : $_SESSION['id'];
