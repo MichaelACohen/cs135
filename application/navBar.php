@@ -21,25 +21,25 @@ $curURL = $_SERVER['PHP_SELF'];
 </style>
 
 <nav class="navbar navbar-default" role="navigation">
-  <div class="container">
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-      	<?php
-      		foreach($menu as $key => $val) {
-      			if ($key != 'logout') {
-      				$selected  = (isset($curURL) && strpos($curURL, $val['url'])) ? 'active' : null;
-					echo "<li class='{$selected}'><a href='{$val['url']}'>{$val['text']}</a></li>";
-      			}
-      		}
-      	?>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><p class="navbar-text">Logged in as <?php echo $_SESSION['displayName']; ?></p></li>
-        <?php
-        	$selected = (isset($curURL) && strpos($curURL, $menu['logout']['url'])) ? 'active' : null;
-        	echo "<li><a href='{$menu['logout']['url']}'>Logout</a></li>"
-        ?>
-      </ul>
-    </div>
-  </div>
+	<div class="container">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<?php
+				$id = $_SESSION['id'];
+				foreach($menu as $key => $val) {
+					if ($key != 'logout') {
+						$selected  = (isset($curURL) && strpos($curURL, $val['url']) && (isset($_GET['profID']) ? ($id == $_GET['profID'] ? true : false) : true)) ? 'active' : null;
+						echo "<li class='{$selected}'><a href='{$val['url']}'>{$val['text']}</a></li>";
+					}
+				}
+				?>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><p class="navbar-text">Logged in as <?php echo $_SESSION['displayName']; ?></p></li>
+				<?php
+				echo "<li><a href='{$menu['logout']['url']}'>Logout</a></li>"
+				?>
+			</ul>
+		</div>
+	</div>
 </nav>
