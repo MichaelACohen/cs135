@@ -165,14 +165,9 @@ for ($i = 0; $i < $rows; ++$i) {
         $(function() {
             $(".commentText").each(function() {
                 $(this).autoResize();
+                $('#left').height($('#middle').height());
+                $('#right').height($('#middle').height());
             });
-        });
-        $(document).ready(function() {
-            $('#left').height($('#middle').height());
-            $('#right').height($('#middle').height());
-            //vertically-center text to left on video
-            var height = $('#abc').height();
-            $('#blah').css('margin-top', height/2);
         });
         function openWindow(names) {
             newWindow = window.open("", null, "height=200,width=400,status=yes,toolbar=no,menubar=no,location=no");
@@ -275,11 +270,12 @@ function displayVideo($index, $video) {
     $numComments = sizeof($video['comments']);
     if ($numComments) {
         echo "<table class='table table-condensed'>";
+        echo "<thead><tr><th width='20%'></th><th width='80%'></th></thead>";
         for ($i = 0; $i < $numComments; ++$i) {
             $display_name = $video['comments'][$i]['display_name'];
             $message = $video['comments'][$i]['message'];
             $commenter = $video['comments'][$i]['id'];
-            echo "<tr><td><a href='profile3.php?profID=$commenter'><span>$display_name</span></td><td colspan='2'><span>$message</span></td></tr>";
+            echo "<tr><td><a href='profile.php?profID=$commenter'>$display_name</a></td><td>$message</td></tr>";
         }
         echo "</table>";
     }
