@@ -60,7 +60,7 @@ if (isset($_SESSION['id'])) {
 </head>
 
 <body>
-<h2>Log In</h2>
+<h2>Log In (or <a href='createAccount.php'> create account</a>)</h2>
 <form method="post">
   <table>
     <tr>
