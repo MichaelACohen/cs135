@@ -3,11 +3,8 @@ require_once 'loginStatus.php';
 require_once '../database/db_info.php';
 $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
-
 $id = $_GET ? ($_GET['profID'] ? $_GET['profID'] : $_SESSION['id']) : $_SESSION['id'];
-
 $error = "";
-
 if ($_POST) {
     //if comment
     if (isset($_POST['comment'])) {
@@ -41,16 +38,13 @@ if ($_POST) {
         }
     }
 }
-
 $query = "SELECT * FROM Videos, VideoFeed WHERE Videos.vid=VideoFeed.videoID AND VideoFeed.userID='$id' ORDER BY VideoFeed.datetime desc";
 $result = $conn->query($query);
 if (!$result) die($conn->error);
-
 //data structure to store information
 //about the videos being displayed
 //and their corresponding likes/comments
 $videos = array();
-
 $rows = $result->num_rows;
 //for each video
 for ($i = 0; $i < $rows; ++$i) {
@@ -59,13 +53,10 @@ for ($i = 0; $i < $rows; ++$i) {
     $result->data_seek($i);
     $youtubeID = $result->fetch_assoc()['youtubeID'];
     array_push($videos, array('vid' => $vid, 'yid' => $youtubeID));
-
     $likeQuery = "SELECT Users.display_name, Users.username, Likes.liker FROM Users, Likes WHERE Likes.videoOwner='$id' AND videoID='$vid' AND Likes.liker=Users.id";
     $result2 = $conn->query($likeQuery);
     if (!$result2) die($conn->error);
-
     $likes = array();
-
     $rows2 = $result2->num_rows;
     //for each like
     for ($j = 0; $j < $rows2; ++$j) {
@@ -78,13 +69,10 @@ for ($i = 0; $i < $rows; ++$i) {
         array_push($likes, array('id' => $liker, 'display_name' => $displayName, 'username' => $username));
     }
     $videos[$i]['likes'] = $likes;
-
     $commentQuery = "SELECT Users.display_name, Users.username, Comments.commenter, Comments.message FROM Users, Comments WHERE Comments.videoOwner='$id' AND videoID='$vid' AND Comments.commenter=Users.id ORDER BY Comments.datetime";
     $result3 = $conn->query($commentQuery);
     if (!$result3) die($conn->error);
-
     $comments = array();
-
     $rows3 = $result3->num_rows;
     //for each comment
     //MAKE SURE COMMENTER IS GETTING PROPER VALUE
@@ -171,7 +159,6 @@ for ($i = 0; $i < $rows; ++$i) {
             color:red;
             margin-bottom:-10px;
         }
-
     </style>
     <script src="../javascripts/jquery.autoresize.js"></script>
     <script>
@@ -183,7 +170,6 @@ for ($i = 0; $i < $rows; ++$i) {
         $(document).ready(function() {
             $('#left').height($('#middle').height());
             $('#right').height($('#middle').height());
-
             //vertically-center text to left on video
             var height = $('#abc').height();
             $('#blah').css('margin-top', height/2);
@@ -243,7 +229,6 @@ for ($i = 0; $i < $rows; ++$i) {
 function validate($data) {
   return htmlspecialchars(stripslashes(trim($data)));
 }
-
 function validYoutubeID($id){
     $id = trim($id);
     if (strlen($id) === 11){
@@ -252,19 +237,15 @@ function validYoutubeID($id){
     }
     return false;
 }
-
 function displayVideo($index, $video) {
     $id = $_GET ? ($_GET['profID'] ? $_GET['profID'] : $_SESSION['id']) : $_SESSION['id'];
-
     $BASE_URL = "https://www.youtube.com/embed/";
     $url = $BASE_URL . $video['yid'];
-
     echo "<div class='video'>";
     
     echo "<iframe src='$url' frameborder='0' allowfullscreen></iframe>";
     
     $numLikes = sizeof($video['likes']);
-
     //determine whether the user liked the video already
     $getLikers = function($likeObj) {
         return $likeObj['id'];
@@ -272,33 +253,25 @@ function displayVideo($index, $video) {
     $likers = array_map($getLikers, $video['likes']);
     $likedByUser = in_array($id, $likers);
     $likeButtonText = $likedByUser ? 'Unlike' : 'Like';
-
     //handle case where only 1 like
     $likes = $numLikes == 1 ? $numLikes . ' Like' : $numLikes . ' Likes';
-
     $names = array();
     for ($i = 0; $i < sizeof($video['likes']); ++$i) {
         array_push($names, array('display_name' => $video['likes'][$i]['display_name'], "username" => $video['likes'][$i]['username']));
     }
     $names = json_encode($names);
-
     //need this for the comment text things for some reason
     $idx = $index*2+1;
-
     echo "<div class='commentHeader'>";
-
     echo "<form style='display:inline-block;' id='form$index' method='post'>";
     echo "<a href='javascript:;' onclick='$(\"#form$index\").submit();'><span>$likeButtonText</span></a>";
     echo "<input type='hidden' name='unlike' value=$likedByUser>";
     echo "<input type='hidden' name='id' value='{$video['vid']}'>";
     echo "</form>";
-
     echo "<a class='numLikes' href='javascript:;' onclick='openWindow($names)'><span>$likes</span></a>";
     echo "<a style='float:right;' href='javascript:;' onclick='$(\".comments\")[$index].scrollTop = $(\".comments\")[$index].scrollHeight; $(\".commentText\")[$idx].focus();'><span>Comment</span></a>";
     echo "</div>";
-
     echo "<div class='comments'>";
-
     $numComments = sizeof($video['comments']);
     if ($numComments) {
         echo "<table class='table table-condensed'>";
