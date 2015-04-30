@@ -20,8 +20,6 @@ if($_POST){
         }
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -39,17 +37,19 @@ if($_POST){
     if (!$result) die($conn->error);
 
     $rows = $result->num_rows;
+    echo "<div style='margin-left:10px;'>";
     if ($rows) {
-        echo 'These are the people following you!';
-        echo '<ul>';
+        $msg = $rows == 1 ? 'This is the 1 person following you!' : 'These are the ' . $rows . ' people following you!';
+        echo '<p>'.$msg.'</p>';
+        echo '<table style="border-collapse:separate;border-spacing:10px 10px;">';
         for ($i = 0; $i < $rows; ++$i) {
 			$result->data_seek($i);
 			$display_name = $result->fetch_assoc()['display_name'];
 			$result->data_seek($i);
 			$username = $result->fetch_assoc()['username'];
-                        $result->data_seek($i);
+            $result->data_seek($i);
 			$followerID = $result->fetch_assoc()['id'];
-            echo '<li><a href=\'profile.php?profID='.$followerID.'\'>'.$display_name.' ('.$username.')'.'</a>';
+            echo '<tr><td><a href=\'profile.php?profID='.$followerID.'\'>'.$display_name.' ('.$username.')'.'</a></td>';
             
             //Look to see if you are following them back
             $query = "SELECT EXISTS(SELECT 1 FROM Follows WHERE followerID='$id' AND followeeID='$followerID')";
@@ -62,21 +62,18 @@ if($_POST){
                 $result2->close();
                 if (!$row[0]) {
                     echo "<form method=\"post\"><input type='hidden' name='tofollowID' value='$followerID'/>";
-                    echo "<input type='submit' value='Follow Back'/></form></li>";
-                }           
-                else{
-                //otherwise no button
-                    echo"</li>";
+                    echo "<td><button type='submit' class='btn btn-default'>Follow Back</button></td></form>";
                 }
+                echo "</tr>";
             }
         }
-        echo '</ul>';
+        echo '</table>';
     }
     else {
         //no followers
-        echo "no one likes you.";
+        echo "You have no followers.";
     }
-    
+    echo "</div>";
     $result->close();
     $conn->close();
     ?>

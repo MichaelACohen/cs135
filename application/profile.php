@@ -28,11 +28,16 @@ if ($_POST) {
             $query = "DELETE FROM Likes WHERE videoOwner = '$id' AND liker = '$liker' AND videoID = '$vid'";
             $result = $conn->query($query);
         }
+    //if adding video
     } else if (isset($_POST['youtubeID'])) {
         $youtubeID = $_POST['youtubeID'];
         if (validYoutubeID($youtubeID)) {
-            $query = "INSERT INTO VideoFeed (userID, videoID) VALUES ('$id', '$youtubeID')";
-            $conn->query($query);
+            $query1 = "INSERT INTO Videos (youtubeID) VALUES ('$youtubeID')";
+            $conn->query($query1);
+            $vid = $conn->insert_id;
+            $query2 = "INSERT INTO VideoFeed (userID, videoID) VALUES ('$id', '$vid')";
+            $result = $conn->query($query2);
+            if (!$result) die($conn->error);
         } else {
             $error = "Sorry, that is not a valid Youtube video ID.";
         }
