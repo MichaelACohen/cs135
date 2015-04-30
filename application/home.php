@@ -13,15 +13,17 @@ if($_POST){
         $videoID = validate($_POST['addID']);
         $query = "SELECT EXISTS(SELECT 1 FROM VideoFeed WHERE userID='$id' AND videoID='$videoID')";
         $resulta = $conn->query($query);
-       // if (!$resulta) {die($conn->error);}
-        //else{
-          //  $row = $resulta->fetch_array(MYSQLI_NUM);
-            //if(!$row){
+        if (!$resulta) {die($conn->error);}
+        else{
+            $resulta->data_seek(0);
+            $exists = $resulta->fetch_assoc();
+            if($exists){
                 $query = "INSERT INTO VideoFeed (userID,videoID) Values ($id, $videoID)";
                 $resulta = $conn->query($query);
-           // }
+            }
+        }
     }
-       // $resulta->close();
+       //ASK MICHAEL $resulta->close();
 }
 ?>
 
@@ -127,7 +129,7 @@ if($_POST){
             
             
                     // select youtube id where you follow the users who have the video in their feed
-                    $query = "SELECT DISTINCT Videos.youtubeID, Videos.vid, Users.display_name, Follows.followeeID 
+                    $query = "SELECT DISTINCT Videos.youtubeID, VideoFeed.datetime, Videos.vid, Users.display_name, Follows.followeeID 
                     FROM Videos, VideoFeed, Follows, Users 
                     WHERE Follows.followerID=$id AND VideoFeed.userID=Follows.followeeID 
                     AND Videos.vid=VideoFeed.videoID AND Follows.followeeID=Users.id 
@@ -146,11 +148,13 @@ if($_POST){
                             $display_name = $result->fetch_assoc()['display_name'];
                             $result->data_seek($i);
                             $followeeID = $result->fetch_assoc()['followeeID'];
-                            echo"<th><iframe src='https://www.youtube.com/embed/".$videoURL."'frameborder='0' allowfullscreen></iframe>";
-                            echo " Posted by <a href='profile.php?profID=".$followeeID."'>".$display_name."</a>";
+                            $result->data_seek($i);
+                            $datetime = $result->fetch_assoc()['datetime'];
+                            echo "<th>Posted by <a href='profile.php?profID=".$followeeID."'>".$display_name."</a>";
                             echo "<right><form method=\"post\" style=\"display:inline; float:right;\"><input type='hidden' name='addID' value='$videoID'/>";
-                            echo "<input type='submit' value='Add Video'/></form></th></right>";
-                            
+                            echo "<input type='submit' value='Add Video'/></form>";
+                            echo"<iframe src='https://www.youtube.com/embed/".$videoURL."'frameborder='0' allowfullscreen></iframe>";
+                            echo "Posted on ".$datetime."</th></right>";
                             if($i%3==2){echo "</tr>";}
                         }
                     }
@@ -170,34 +174,3 @@ if($_POST){
 function validate($data) {
   return htmlspecialchars(stripslashes(trim($data)));
 }
-function displayVideo($index, $video) {
-    
-    $numLikes = sizeof($video['likes']);
-    //determine whether the user liked the video already
-    $getLikers = function($likeObj) {
-        return $likeObj['id'];
-    };
-    $likers = array_map($getLikers, $video['likes']);
-    $likedByUser = in_array($id, $likers);
-    $likeButtonText = $likedByUser ? 'Unlike' : 'Like';
-    //handle case where only 1 like
-    $likes = $numLikes == 1 ? $numLikes . ' Like' : $numLikes . ' Likes';
-    $names = array();
-    for ($i = 0; $i < sizeof($video['likes']); ++$i) {
-        array_push($names, array('display_name' => $video['likes'][$i]['display_name'], "username" => $video['likes'][$i]['username']));
-    }
-    $names = json_encode($names);
-    //need this for the comment text things for some reason
-    $idx = $index*2+1;
-    echo "<div class='commentHeader'>";
-    echo "<form style='display:inline-block;' id='form$index' method='post'>";
-    echo "<a href='javascript:;' onclick='$(\"#form$index\").submit();'><span>$likeButtonText</span></a>";
-    echo "<input type='hidden' name='unlike' value=$likedByUser>";
-    echo "<input type='hidden' name='id' value='{$video['vid']}'>";
-    echo "</form>";
-    echo "<a class='numLikes' href='javascript:;' onclick='openWindow($names)'><span>$likes</span></a>";
-    echo "<a style='float:right;' href='javascript:;' onclick='$(\".comments\")[$index].scrollTop = $(\".comments\")[$index].scrollHeight; $(\".commentText\")[$idx].focus();'><span>Comment</span></a>";
-    echo "</div>";
-    echo "</div>";
-}
-?>

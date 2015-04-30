@@ -23,104 +23,117 @@ INSERT INTO Users (
 	"Connor", "connor", "37180c909687e65862382e078f95c02e", "user"
 );
 
+INSERT INTO Users (
+	display_name, username, password, role
+) VALUES (
+	"Karin", "karin", "fb4edbb5359e697ac511b7feab4bf1ab", "user"
+);
+
+INSERT INTO Users (
+	display_name, username, password, role
+) VALUES (
+	"Delangis", "delangis", "e0df7f1105ee6448c9e0f297b67b30bf", "user"
+);
+
 #videos
-INSERT INTO Videos (youtubeID) VALUES ("3aF-ANf4KY8");
-INSERT INTO Videos (youtubeID) VALUES ("B38wu7wxGjg");
-INSERT INTO Videos (youtubeID) VALUES ("fWNaR-rxAic");
-INSERT INTO Videos (youtubeID) VALUES ("0pajUiPYjrI");
-INSERT INTO Videos (youtubeID) VALUES ("qnHyhCYOgTI");
-INSERT INTO Videos (youtubeID) VALUES ("9NLZCLKppZs");
-INSERT INTO Videos (youtubeID) VALUES ("g6ducUsfllU");
-INSERT INTO Videos (youtubeID) VALUES ("Xm49yEL6ca4");
-INSERT INTO Videos (youtubeID) VALUES ("wUfVeUu0fuY");
-INSERT INTO Videos (youtubeID) VALUES ("cSWqxbswQAY");
-INSERT INTO Videos (youtubeID) VALUES ("iD2rhdFRehU");
-INSERT INTO Videos (youtubeID) VALUES ("AKZWI7V8h-g");
-INSERT INTO Videos (youtubeID) VALUES ("xEYV5bNMZVo");
-INSERT INTO Videos (youtubeID) VALUES ("_oEKgfawEJQ");
-INSERT INTO Videos (youtubeID) VALUES ("tdmyoMe4iHM");
-INSERT INTO Videos (youtubeID) VALUES ("gZNraqVnlu0");
-INSERT INTO Videos (youtubeID) VALUES ("8jEt0OfRDVI");
-INSERT INTO Videos (youtubeID) VALUES ("oVUtSDKy3TM");
-INSERT INTO Videos (youtubeID) VALUES ("FCWLtyTmX3o");
-INSERT INTO Videos (youtubeID) VALUES ("C3Ue1AXSzyw");
+INSERT INTO Videos (youtubeID) VALUES ("3aF-ANf4KY8");#pomona
+INSERT INTO Videos (youtubeID) VALUES ("0pajUiPYjrI");#catvines
+INSERT INTO Videos (youtubeID) VALUES ("qnHyhCYOgTI");#kobe
+INSERT INTO Videos (youtubeID) VALUES ("9NLZCLKppZs");#john mayer
+INSERT INTO Videos (youtubeID) VALUES ("g6ducUsfllU");#seals
+INSERT INTO Videos (youtubeID) VALUES ("Xm49yEL6ca4");#drone surf
+INSERT INTO Videos (youtubeID) VALUES ("wUfVeUu0fuY");#jack johnson
+INSERT INTO Videos (youtubeID) VALUES ("cSWqxbswQAY");#hozier
+INSERT INTO Videos (youtubeID) VALUES ("iD2rhdFRehU");#ed sheeran
+INSERT INTO Videos (youtubeID) VALUES ("AKZWI7V8h-g");#surf dog
+INSERT INTO Videos (youtubeID) VALUES ("_oEKgfawEJQ");#LOST
+INSERT INTO Videos (youtubeID) VALUES ("tdmyoMe4iHM");#miracle
+INSERT INTO Videos (youtubeID) VALUES ("gZNraqVnlu0");#coming to pomona
+INSERT INTO Videos (youtubeID) VALUES ("8jEt0OfRDVI");#wopo
+INSERT INTO Videos (youtubeID) VALUES ("oVUtSDKy3TM");#catch it
+INSERT INTO Videos (youtubeID) VALUES ("FCWLtyTmX3o");#rock climbing
 
 
-#videofeed
+
+#videofeed 
 INSERT INTO VideoFeed (userID, videoID) VALUES (1, 1);
-INSERT INTO VideoFeed (userID, videoID) VALUES (1, 5);
 INSERT INTO VideoFeed (userID, videoID) VALUES (2, 2);
 INSERT INTO VideoFeed (userID, videoID) VALUES (3, 3);
 INSERT INTO VideoFeed (userID, videoID) VALUES (4, 4);
-INSERT INTO VideoFeed (userID, videoID) VALUES (2, 3);
-INSERT INTO VideoFeed (userID, videoID) VALUES (1, 4);
-INSERT INTO VideoFeed (userID, videoID) VALUES (1, 3);
-INSERT INTO VideoFeed (userID, videoID) VALUES (2, 8);
+INSERT INTO VideoFeed (userID, videoID) VALUES (1, 5);
+INSERT INTO VideoFeed (userID, videoID) VALUES (2, 6);
 INSERT INTO VideoFeed (userID, videoID) VALUES (3, 7);
-INSERT INTO VideoFeed (userID, videoID) VALUES (3, 8);
-INSERT INTO VideoFeed (userID, videoID) VALUES (3, 9);
-INSERT INTO VideoFeed (userID, videoID) VALUES (4, 11);
-INSERT INTO VideoFeed (userID, videoID) VALUES (1, 12);
-INSERT INTO VideoFeed (userID, videoID) VALUES (2, 13);
-INSERT INTO VideoFeed (userID, videoID) VALUES (2, 14);
+INSERT INTO VideoFeed (userID, videoID) VALUES (4, 8);
+INSERT INTO VideoFeed (userID, videoID) VALUES (1, 9);
 INSERT INTO VideoFeed (userID, videoID) VALUES (2, 10);
-INSERT INTO VideoFeed (userID, videoID) VALUES (2, 9);
-INSERT INTO VideoFeed (userID, videoID) VALUES (3, 15);
-INSERT INTO VideoFeed (userID, videoID) VALUES (3, 16);
-INSERT INTO VideoFeed (userID, videoID) VALUES (3, 17);
-INSERT INTO VideoFeed (userID, videoID) VALUES (3, 18);
-INSERT INTO VideoFeed (userID, videoID) VALUES (4, 11);
-INSERT INTO VideoFeed (userID, videoID) VALUES (4, 13);
-INSERT INTO VideoFeed (userID, videoID) VALUES (4, 20);
-INSERT INTO VideoFeed (userID, videoID) VALUES (2, 16);
-INSERT INTO VideoFeed (userID, videoID) VALUES (1, 16);
+INSERT INTO VideoFeed (userID, videoID) VALUES (3, 11);
+INSERT INTO VideoFeed (userID, videoID) VALUES (4, 12);
+INSERT INTO VideoFeed (userID, videoID) VALUES (1, 3);
+INSERT INTO VideoFeed (userID, videoID) VALUES (1, 13);
+INSERT INTO VideoFeed (userID, videoID) VALUES (1, 14);
+INSERT INTO VideoFeed (userID, videoID) VALUES (5, 15);
+INSERT INTO VideoFeed (userID, videoID) VALUES (5, 16);
+INSERT INTO VideoFeed (userID, videoID) VALUES (6, 16);
+INSERT INTO VideoFeed (userID, videoID) VALUES (3, 3);
+INSERT INTO VideoFeed (userID, videoID) VALUES (4, 7);
+INSERT INTO VideoFeed (userID, videoID) VALUES (3, 2);
+INSERT INTO VideoFeed (userID, videoID) VALUES (4, 5);
+INSERT INTO VideoFeed (userID, videoID) VALUES (3, 6);
 
 
 
 #hashtags
 INSERT INTO Hashtags (tag) VALUES ("pomona");
-INSERT INTO Hashtags (tag) VALUES ("ppwwp");
 INSERT INTO Hashtags (tag) VALUES ("music");
 INSERT INTO Hashtags (tag) VALUES ("cats");
-INSERT INTO Hashtags (tag) VALUES ("kobe");
+INSERT INTO Hashtags (tag) VALUES ("sports");
+INSERT INTO Hashtags (tag) VALUES ("ocean");
 
 #video hashtags
 INSERT INTO VideoHashtags (videoID, hashtagID) VALUES (1, 1);
-INSERT INTO VideoHashtags (videoID, hashtagID) VALUES (2, 2);
-INSERT INTO VideoHashtags (videoID, hashtagID) VALUES (3, 3);
-INSERT INTO VideoHashtags (videoID, hashtagID) VALUES (4, 4);
+INSERT INTO VideoHashtags (videoID, hashtagID) VALUES (13, 1);
 INSERT INTO VideoHashtags (videoID, hashtagID) VALUES (5, 5);
+INSERT INTO VideoHashtags (videoID, hashtagID) VALUES (6, 5);
+INSERT INTO VideoHashtags (videoID, hashtagID) VALUES (10, 5);
 
 #likes
-INSERT INTO Likes (liker, videoOwner, videoID) VALUES (2, 1, 1);
 INSERT INTO Likes (liker, videoOwner, videoID) VALUES (1, 1, 1);
-INSERT INTO Likes (liker, videoOwner, videoID) VALUES (1, 2, 2);
 INSERT INTO Likes (liker, videoOwner, videoID) VALUES (3, 2, 2);
-INSERT INTO Likes (liker, videoOwner, videoID) VALUES (4, 2, 2);
 INSERT INTO Likes (liker, videoOwner, videoID) VALUES (1, 3, 3);
-INSERT INTO Likes (liker, videoOwner, videoID) VALUES (4, 3, 3);
-INSERT INTO Likes (liker, videoOwner, videoID) VALUES (2, 4, 4);
-INSERT INTO Likes (liker, videoOwner, videoID) VALUES (4, 4, 4);
-INSERT INTO Likes (liker, videoOwner, videoID) VALUES (3, 1, 5);
-INSERT INTO Likes (liker, videoOwner, videoID) VALUES (1, 1, 5);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (3, 4, 4);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (4, 1, 5);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (1, 2, 6);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (4, 2, 6);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (5, 2, 6);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (4, 3, 7);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (2, 4, 8);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (4, 5, 15);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (3, 5, 15);
+INSERT INTO Likes (liker, videoOwner, videoID) VALUES (1, 4, 5);
 
 #comments
 INSERT INTO Comments (commenter, videoOwner, videoID, message)
-VALUES (3, 1, 1, "this school sucks");
+VALUES (5, 2, 6, "Hopefully the drone doesn't fall into the ocean.");
 INSERT INTO Comments (commenter, videoOwner, videoID, message)
-VALUES (1, 1, 1, "lol");
+VALUES (2, 2, 6, "Watch out for sharks!");
 INSERT INTO Comments (commenter, videoOwner, videoID, message)
-VALUES (4, 2, 2, "nice");
+VALUES (4, 2, 6, "Amazing!");
 INSERT INTO Comments (commenter, videoOwner, videoID, message)
-VALUES (2, 2, 2, "thanks");
+VALUES (3, 1, 14, "Whoah this is pretty cool");
+INSERT INTO Comments (commenter, videoOwner, videoID, message)
+VALUES (1, 1, 14, "water polo is awesome!");
+INSERT INTO Comments (commenter, videoOwner, videoID, message)
+VALUES (4, 5, 15, "nice");
+INSERT INTO Comments (commenter, videoOwner, videoID, message)
+VALUES (2, 6, 16, "thanks");
 INSERT INTO Comments (commenter, videoOwner, videoID, message)
 VALUES (1, 3, 3, "cute");
 INSERT INTO Comments (commenter, videoOwner, videoID, message)
-VALUES (4, 4, 4, "cats");
+VALUES (4, 4, 7, "cats");
 INSERT INTO Comments (commenter, videoOwner, videoID, message)
-VALUES (3, 1, 5, "yes michael");
+VALUES (3, 3, 2, "awesome");
 INSERT INTO Comments (commenter, videoOwner, videoID, message)
-VALUES (3, 1, 5, "Kobe.");
+VALUES (3, 4, 5, "I like this video.");
 
 #follows
 INSERT INTO Follows (followerID, followeeID) VALUES (1, 2);
