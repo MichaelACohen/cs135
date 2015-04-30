@@ -190,6 +190,7 @@ for ($i = 0; $i < $rows; ++$i) {
     </div>
     <div id="top">
         <?php
+            $id = $_GET ? ($_GET['profID'] ? $_GET['profID'] : $_SESSION['id']) : $_SESSION['id'];
             if ($id != $_SESSION['id']) {
                 $query = "SELECT display_name FROM Users WHERE id='$id'";
                 $result = $conn->query($query);
