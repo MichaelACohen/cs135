@@ -5,8 +5,6 @@ $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
 
 $id = $_SESSION['id'];
-//this query should hopefully return the username and display name for 
-//all the people that the current user is following
 
 //add followers
 if($_POST){
@@ -50,7 +48,9 @@ if($_POST){
 	<?php require_once 'navBar.php' ?>
                 
         <?php 
-        $query = "SELECT Users.display_name, Users.id ,Users.username FROM Follows, Users WHERE Follows.followerID = '$id' AND Users.id = Follows.followeeID";
+        $query = "SELECT Users.display_name, Users.id ,Users.username 
+        FROM Follows, Users 
+        WHERE Follows.followerID = '$id' AND Users.id = Follows.followeeID";
         $result = $conn->query($query);
         if (!$result) die($conn->error);
 

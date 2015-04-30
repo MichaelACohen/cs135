@@ -32,10 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $conn->close();
       
       ?> Click <a href='login.php'>Here</a> to Login <?php
-
-      //do something here like...
-      //1) reload this page w message saying "Account created" or something
-      //2) redirect to login page
     }
   }
 } else {

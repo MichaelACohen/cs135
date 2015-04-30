@@ -74,9 +74,8 @@ if($_POST){
     }
     else {
         //no followers
-        echo "no one likes you.";
+        echo "no one is following you.";
     }
-    
     $result->close();
     $conn->close();
     ?>

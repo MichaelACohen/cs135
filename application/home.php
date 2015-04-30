@@ -8,6 +8,7 @@ $id = $_SESSION['id'];
 
 <?php
 
+//add videos from home page to profile pafe
 if($_POST){
     if($_POST['addID']){
         $videoID = validate($_POST['addID']);
@@ -32,11 +33,6 @@ if($_POST){
 <head>
     <title>Home Page</title>
     <?php require_once 'includes.php' ?>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <style>
         #header {
             width:100%;
@@ -126,8 +122,6 @@ if($_POST){
                 <center>
                 <table class="table table-bordered">
                 <?php
-            
-            
                     // select youtube id where you follow the users who have the video in their feed
                     $query = "SELECT DISTINCT Videos.youtubeID, VideoFeed.datetime, Videos.vid, Users.display_name, Follows.followeeID 
                     FROM Videos, VideoFeed, Follows, Users 
@@ -150,6 +144,7 @@ if($_POST){
                             $followeeID = $result->fetch_assoc()['followeeID'];
                             $result->data_seek($i);
                             $datetime = $result->fetch_assoc()['datetime'];
+                            //video display
                             echo "<th>Posted by <a href='profile.php?profID=".$followeeID."'>".$display_name."</a>";
                             echo "<right><form method=\"post\" style=\"display:inline; float:right;\"><input type='hidden' name='addID' value='$videoID'/>";
                             echo "<input type='submit' value='Add Video'/></form>";
@@ -158,7 +153,6 @@ if($_POST){
                             if($i%3==2){echo "</tr>";}
                         }
                     }
-            
                     $result->close();
                     $conn->close();
                     ?>
