@@ -127,7 +127,7 @@ if($_POST){
             
             
                     // select youtube id where you follow the users who have the video in their feed
-                    $query = "SELECT DISTINCT Videos.youtubeID, Videos.vid, Users.display_name, Follows.followeeID 
+                    $query = "SELECT DISTINCT Videos.youtubeID, VideoFeed.datetime, Videos.vid, Users.display_name, Follows.followeeID 
                     FROM Videos, VideoFeed, Follows, Users 
                     WHERE Follows.followerID=$id AND VideoFeed.userID=Follows.followeeID 
                     AND Videos.vid=VideoFeed.videoID AND Follows.followeeID=Users.id 
@@ -146,10 +146,14 @@ if($_POST){
                             $display_name = $result->fetch_assoc()['display_name'];
                             $result->data_seek($i);
                             $followeeID = $result->fetch_assoc()['followeeID'];
-                            echo"<th><iframe src='https://www.youtube.com/embed/".$videoURL."'frameborder='0' allowfullscreen></iframe>";
-                            echo " Posted by <a href='profile.php?profID=".$followeeID."'>".$display_name."</a>";
+                            $result->data_seek($i);
+                            $datetime = $result->fetch_assoc()['datetime'];
+                            echo "<th>Posted by <a href='profile.php?profID=".$followeeID."'>".$display_name."</a>";
                             echo "<right><form method=\"post\" style=\"display:inline; float:right;\"><input type='hidden' name='addID' value='$videoID'/>";
-                            echo "<input type='submit' value='Add Video'/></form></th></right>";
+                            echo "<input type='submit' value='Add Video'/></form>";
+                            echo"<iframe src='https://www.youtube.com/embed/".$videoURL."'frameborder='0' allowfullscreen></iframe>";
+                            echo "Posted on ".$datetime."</th></right>";
+                            
                             
                             if($i%3==2){echo "</tr>";}
                         }
