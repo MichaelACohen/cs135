@@ -43,7 +43,17 @@ if ($_POST) {
         }
     }
 }
-$query = "SELECT * FROM Videos, VideoFeed WHERE Videos.vid=VideoFeed.videoID AND VideoFeed.userID='$id' ORDER BY VideoFeed.datetime desc";
+if ($_POST && isset($_POST['hashtag'])) {
+    $tag = $_POST['hashtag'];
+    $hashtagQuery = "SELECT hid FROM Hashtags WHERE tag='$tag'";
+    $hashtagResult = $conn->query($hashtagQuery);
+    $row = $hashtagResult->fetch_array(MYSQLI_NUM);
+    $hid = $row[0];
+    $hashtagResult->close();
+    $query = "SELECT * FROM Videos, VideoFeed, VideoHashtags WHERE Videos.vid=VideoFeed.videoID AND VideoFeed.userID='$id' AND VideoHashtags.videoID=Videos.vid AND VideoHashtags.hashtagID='$hid' ORDER BY VideoFeed.datetime desc";
+} else {
+    $query = "SELECT * FROM Videos, VideoFeed WHERE Videos.vid=VideoFeed.videoID AND VideoFeed.userID='$id' ORDER BY VideoFeed.datetime desc";
+}
 $result = $conn->query($query);
 if (!$result) die($conn->error);
 //data structure to store information
@@ -109,7 +119,7 @@ for ($i = 0; $i < $rows; ++$i) {
         }
         #top {
             width:100%;
-            height: 50px;
+            height: 100px;
             line-height:50px;
             text-align:center;
         }
@@ -203,17 +213,23 @@ for ($i = 0; $i < $rows; ++$i) {
                 $result->close();
             } else {
                 if (strlen($error)) {
-                    echo "<script>$('#top').height('100px');</script>";
+                    echo "<script>$('#top').height('150');</script>";
                     echo "<span id='error'>$error</span>";
                 }
                 echo "<form class='form-inline' method='post'>";
                 echo "<div class='form-group'>";
-                echo "<label for='videoIDinput'>New video</label><input style='margin-left:5px;' class='form-control' type='text' id='videoIDinput' name='youtubeID' placeholder='Youtube video ID...'>";
-                echo "<button type='submit' class='btn btn-default' method='post'>Add</button>";
+                echo "<input class='form-control' type='text' id='videoIDinput' name='youtubeID' placeholder='Youtube video ID...'>";
+                echo "<button style='margin-left:5px;' type='submit' class='btn btn-default' method='post'>Add Video</button>";
                 echo "</div>";
                 echo "</form>";
             }
         ?>
+        <form class='form-inline' method='post'>
+            <div class='form-group'>
+                <input class='form-control' type='text' name='hashtag' placeholder='Filter by hashtag'>
+                <button type='submit' class='btn btn-default'>Filter</button>
+            </div>
+        </form>
     </div>
     <div id="left"></div>
     <div id="middle">
