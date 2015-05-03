@@ -9,7 +9,7 @@ $id = $_SESSION['id'];
 <?php
 
 if($_POST){
-    if($_POST['addID']){
+    if(isset($_POST['addID'])){
         $videoID = validate($_POST['addID']);
         $query = "SELECT EXISTS(SELECT 1 FROM VideoFeed WHERE userID='$id' AND videoID='$videoID')";
         $resulta = $conn->query($query);
@@ -120,20 +120,39 @@ if($_POST){
         
 	<h2>Home Page</h2>
 	<p>Welcome to your home page, <?php echo $_SESSION['displayName']; ?>. </p>
-      
+    <center>
+    <form class='form-inline' method='post'>
+        <div class='form-group'>
+            <input class='form-control' type='text' name='hashtag' placeholder='Filter by hashtag'>
+            <button type='submit' class='btn btn-default'>Search</button>
+        </div>
+    </form>
+    </center>
         <div id="left"></div>
         <div id="middle">
                 <center>
                 <table class="table table-bordered">
                 <?php
-            
-            
-                    // select youtube id where you follow the users who have the video in their feed
-                    $query = "SELECT DISTINCT Videos.youtubeID, VideoFeed.datetime, Videos.vid, Users.display_name, Follows.followeeID 
-                    FROM Videos, VideoFeed, Follows, Users 
-                    WHERE Follows.followerID=$id AND VideoFeed.userID=Follows.followeeID 
-                    AND Videos.vid=VideoFeed.videoID AND Follows.followeeID=Users.id 
-                    ORDER BY VideoFeed.datetime DESC";
+                    if ($_POST && isset($_POST['hashtag'])) {
+                        $tag = $_POST['hashtag'];
+                        $hashtagQuery = "SELECT hid FROM Hashtags WHERE tag='$tag'";
+                        $hashtagResult = $conn->query($hashtagQuery);
+                        $row = $hashtagResult->fetch_array(MYSQLI_NUM);
+                        $hid = $row[0];
+                        $hashtagResult->close();
+                        $query = "SELECT DISTINCT Videos.youtubeID, VideoFeed.datetime, Videos.vid, Users.display_name, Follows.followeeID
+                        FROM Videos, VideoFeed, VideoHashtags, Follows, Users
+                        WHERE Follows.followerID=$id AND VideoFeed.userID=Follows.followeeID
+                        AND Videos.vid=VideoFeed.videoID AND Follows.followeeID=Users.id AND
+                        VideoHashtags.videoID=Videos.vid AND VideoHashtags.hashtagID='$hid'
+                        ORDER BY VideoFeed.datetime DESC";
+                    } else {
+                        $query = "SELECT DISTINCT Videos.youtubeID, VideoFeed.datetime, Videos.vid, Users.display_name, Follows.followeeID 
+                        FROM Videos, VideoFeed, Follows, Users
+                        WHERE Follows.followerID=$id AND VideoFeed.userID=Follows.followeeID
+                        AND Videos.vid=VideoFeed.videoID AND Follows.followeeID=Users.id
+                        ORDER BY VideoFeed.datetime DESC";
+                    }
                     $result = $conn->query($query);
                     if (!$result) die($conn->error);
                     $rows = $result->num_rows;
