@@ -44,7 +44,7 @@ if($_POST){
 			$username = $result->fetch_assoc()['username'];
             $result->data_seek($i);
 			$followerID = $result->fetch_assoc()['id'];
-            echo '<tr><td><a href=\'profile.php?profID='.$followerID.'\'>'.$display_name.' ('.$username.')'.'</a></td>';
+            echo '<tr><td><a href=\'profile.php?profID='.$followerID.'\'>'.$display_name.'</a> ('.$username.')'.'</td>';
             
             //Look to see if you are following them back
             $query = "SELECT EXISTS(SELECT 1 FROM Follows WHERE followerID='$id' AND followeeID='$followerID')";

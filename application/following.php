@@ -62,7 +62,7 @@ if($_POST){
                 $result->data_seek($i);
                 $followeeID=$result->fetch_assoc()['id'];
                 //display all the info in a table or something
-                echo '<tr><td><a href=\'profile.php?profID='.$followeeID.'\'>'.$display_name.'</a>('.$username.')</td>';
+                echo '<tr><td><a href=\'profile.php?profID='.$followeeID.'\'>'.$display_name.'</a> ('.$username.')</td>';
                 echo "<form method='post'><input type='hidden' name='unfollowID' value='$followeeID'>";
                 echo '<td><button class=\'btn btn-default\' type=\'submit\'>Unfollow</button></td></form></tr>';
             }

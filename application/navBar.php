@@ -5,6 +5,7 @@ $menu = array(
 	'profile' => array('text' => 'My Profile', 'url' => 'profile.php'),
 	'following' => array('text' => 'Following', 'url'=>'following.php'),
 	'followers' => array('text' => 'Followers', 'url'=> 'followers.php'),
+        'addVideo' => array('text' => 'Add Video', 'url'=> 'addVideo.php'),
 	'logout' => array('text' => 'Log Out', 'url' => 'logout.php')
 );
 
