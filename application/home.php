@@ -31,68 +31,13 @@ if($_POST){
 <head>
     <title>Home Page</title>
     <?php require_once 'includes.php' ?>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <style>
-        #header {
-            width:100%;
-            height:50px;
-            top:0;
-        }
-        #top {
-            width:100%;
-            height: 10px;
-        }
-        #left {
-            width: 5%;
-            float:left;
-            text-align:center;
-            background-color:#F5F5F5;      
-        }
-        #middle {
-            width: 90%;
-            float: left;
-            background-color:#F5F5F5;
-        }
-        #right {
-            width:5%;
-            float:left;
-            background-color:#F5F5F5;
-        }
-        .video {
-            background-color:#E6E6FA;
-        }
-        .numLikes {
-            margin-left:5px;
-        }
-        .comments {
-            width: 100%;
-            height: 150px;
-            overflow:auto;
-            margin-bottom: 20px;
-        }
-        .commentHeader {
-            background-color:white;
-        }
-        .postComment {
-            margin: 5px;
-        }
-        .commentText {
-            width:100%;
-        }
-        #middle iframe {
-            width: 100%;
-            height: 315px;
-            margin-bottom:-5px;
-            /* to create a gap between video and comments: margin-bottom: 10px;*/
-        }
-        table {
-            empty-cells:show;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href='../css/style.css'>
+    <link rel='stylesheet' type='text/css' href='../css/homeStyle.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="../javascripts/jquery.autoresize.js"></script>
     <script>
         $(function() {

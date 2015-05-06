@@ -1,0 +1,26 @@
+#top {
+    height: 50px;
+    line-height:50px;
+    text-align:center;
+}
+#top span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+#left {
+    width: 40%; 
+    height: 170px;     
+}
+#middle {
+    width: 20%;
+    height: 170px;
+}
+#right {
+    width:40%;
+    height: 170px;
+}
+#error {
+    color:red;
+    margin-bottom:-10px;
+}

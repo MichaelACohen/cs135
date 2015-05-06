@@ -1,0 +1,16 @@
+#top {
+    height: 10px;
+}
+#left {
+    width: 5%;
+    text-align:center;   
+}
+#middle {
+    width: 90%;
+}
+#right {
+    width:5%;
+}
+table {
+    empty-cells:show;
+}

@@ -7,7 +7,7 @@ $id = $_GET ? ($_GET['profID'] ? $_GET['profID'] : $_SESSION['id']) : $_SESSION[
 if ($_POST) {
     //if comment
     if (isset($_POST['comment'])) {
-        $comment = $_POST['comment'];
+        $comment = validate($_POST['comment']);
         $vid = $_POST['vid'];
         $commenter = $_SESSION['id'];
         $query = "INSERT INTO Comments (videoOwner, commenter, videoID, message) VALUES ('$id', '$commenter', '$vid', '$comment')";
@@ -30,7 +30,7 @@ if ($_POST) {
     }
 }
 if ($_POST && isset($_POST['hashtag'])) {
-    $tag = $_POST['hashtag'];
+    $tag = validate($_POST['hashtag']);
     $hashtagQuery = "SELECT hid FROM Hashtags WHERE tag='$tag'";
     $hashtagResult = $conn->query($hashtagQuery);
     $row = $hashtagResult->fetch_array(MYSQLI_NUM);
@@ -97,66 +97,8 @@ for ($i = 0; $i < $rows; ++$i) {
 <head>
     <title>Profile</title>
     <?php require_once 'includes.php' ?>
-    <style>
-        #header {
-            width:100%;
-            height:50px;
-            top:0;
-        }
-        #top {
-            width:100%;
-            height: 100px;
-            line-height:50px;
-            text-align:center;
-        }
-        #top span {
-            display: inline-block;
-            vertical-align: middle;
-            line-height: normal;
-        }
-        #left {
-            width: 30%;
-            float:left;
-            background-color:#F5F5F5;      
-        }
-        #middle {
-            width: 40%;
-            float: left;
-            background-color:#F5F5F5;
-        }
-        #right {
-            width:30%;
-            float:left;
-            background-color:#F5F5F5;
-        }
-        .video {
-            background-color:#E6E6FA;
-        }
-        .numLikes {
-            margin-left:5px;
-        }
-        .comments {
-            width: 100%;
-            height: 150px;
-            overflow:auto;
-            margin-bottom: 20px;
-        }
-        .commentHeader {
-            background-color:white;
-        }
-        .postComment {
-            margin: 5px;
-        }
-        .commentText {
-            width:100%;
-        }
-        #middle iframe {
-            width: 100%;
-            height: 315px;
-            margin-bottom:-5px;
-            /* to create a gap between video and comments: margin-bottom: 10px;*/
-        }
-    </style>
+    <link rel='stylesheet' type='text/css' href='../css/style.css'>
+    <link rel='stylesheet' type='text/css' href='../css/profileStyle.css'>
     <script src="../javascripts/jquery.autoresize.js"></script>
     <script>
         $(function() {

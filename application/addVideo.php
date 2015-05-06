@@ -70,75 +70,8 @@ if ($_POST) {
 <head>
     <title>Add Video</title>
     <?php require_once 'includes.php' ?>
-    
-    <style>
-    <!--Make the website look uniform--->
-        #header {
-            width:100%;
-            height:50px;
-            top:0;
-        }
-        #top {
-            width:100%;
-            height: 50px;
-            line-height:50px;
-            text-align:center;
-        }
-        #top span {
-            display: inline-block;
-            vertical-align: middle;
-            line-height: normal;
-        }
-        #left {
-            width: 40%;
-            float:left;
-            background-color:#F5F5F5; 
-            height: 170px;     
-        }
-        #middle {
-            width: 20%;
-            float: left;
-            background-color:#F5F5F5;
-            height: 170px;
-        }
-        #right {
-            width:40%;
-            float:left;
-            background-color:#F5F5F5;
-            height: 170px;
-        }
-        .video {
-            background-color:#E6E6FA;
-        }
-        .numLikes {
-            margin-left:5px;
-        }
-        .comments {
-            width: 100%;
-            height: 150px;
-            overflow:auto;
-            margin-bottom: 20px;
-        }
-        .commentHeader {
-            background-color:white;
-        }
-        .postComment {
-            margin: 5px;
-        }
-        .commentText {
-            width:100%;
-        }
-        #middle iframe {
-            width: 100%;
-            height: 315px;
-            margin-bottom:-5px;
-            /* to create a gap between video and comments: margin-bottom: 10px;*/
-        }
-        #error {
-            color:red;
-            margin-bottom:-10px;
-        }
-    </style>
+    <link rel='stylesheet' type='text/css' href='../css/style.css'>
+    <link rel='stylesheet' type='text/css' href='../css/addVideoStyle.css'>
     <script src="../javascripts/jquery.autoresize.js"></script>
     <script>
         $(function() {
