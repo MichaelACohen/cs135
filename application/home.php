@@ -89,6 +89,9 @@ if($_POST){
             margin-bottom:-5px;
             /* to create a gap between video and comments: margin-bottom: 10px;*/
         }
+        table {
+            empty-cells:show;
+        }
     </style>
     <script src="../javascripts/jquery.autoresize.js"></script>
     <script>
@@ -171,16 +174,16 @@ if($_POST){
                             $followeeID = $result->fetch_assoc()['followeeID'];
                             $result->data_seek($i);
                             $datetime = $result->fetch_assoc()['datetime'];
-                            echo "<th>Posted by <a href='profile.php?profID=".$followeeID."'>".$display_name."</a>";
+                            echo "<td>Posted by <a href='profile.php?profID=".$followeeID."'>".$display_name."</a>";
                             echo "<right><form method=\"post\" style=\"display:inline; float:right;\"><input type='hidden' name='addID' value='$videoID'/>";
                             echo "<input type='submit' value='Add Video'/></form>";
                             echo"<iframe src='https://www.youtube.com/embed/".$videoURL."'frameborder='0' allowfullscreen></iframe>";
-                            echo "Posted on ".$datetime."</th></right>";
+                            echo "Posted on ".$datetime."</td></right>";
                             if($i%3==2){echo "</tr>";}
                         }
-                        if($rows<3){ //keep spacing right if there are less that 3 videos
-                                for($j=$rows;$j<4;$j++){
-                                    echo"<div></div>"; // can't get something that is the same length as <iframe>! 
+                        if($rows<3){
+                                for($j=$rows;$j<3;$j++){
+                                    echo "<td style='width:33%'></td>";
                                 }
                                 echo "</tr>";
                             }
