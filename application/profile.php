@@ -4,7 +4,6 @@ require_once '../database/db_info.php';
 $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
 $id = $_GET ? ($_GET['profID'] ? $_GET['profID'] : $_SESSION['id']) : $_SESSION['id'];
-$error = "";
 if ($_POST) {
     //if comment
     if (isset($_POST['comment'])) {
@@ -27,19 +26,6 @@ if ($_POST) {
         } else {
             $query = "DELETE FROM Likes WHERE videoOwner = '$id' AND liker = '$liker' AND videoID = '$vid'";
             $result = $conn->query($query);
-        }
-    //if adding video
-    } else if (isset($_POST['youtubeID'])) {
-        $youtubeID = $_POST['youtubeID'];
-        if (validYoutubeID($youtubeID)) {
-            $query1 = "INSERT INTO Videos (youtubeID) VALUES ('$youtubeID')";
-            $conn->query($query1);
-            $vid = $conn->insert_id;
-            $query2 = "INSERT INTO VideoFeed (userID, videoID) VALUES ('$id', '$vid')";
-            $result = $conn->query($query2);
-            if (!$result) die($conn->error);
-        } else {
-            $error = "Sorry, that is not a valid Youtube video ID.";
         }
     }
 }
@@ -170,10 +156,6 @@ for ($i = 0; $i < $rows; ++$i) {
             margin-bottom:-5px;
             /* to create a gap between video and comments: margin-bottom: 10px;*/
         }
-        #error {
-            color:red;
-            margin-bottom:-10px;
-        }
     </style>
     <script src="../javascripts/jquery.autoresize.js"></script>
     <script>
@@ -211,19 +193,9 @@ for ($i = 0; $i < $rows; ++$i) {
                     echo "<span>Welcome to $row[0]'s profile page.</span>";
                 }
                 $result->close();
-            } else {
-                if (strlen($error)) {
-                    echo "<script>$('#top').height('150');</script>";
-                    echo "<span id='error'>$error</span>";
-                }
-                echo "<form class='form-inline' method='post'>";
-                echo "<div class='form-group'>";
-                echo "<input class='form-control' type='text' id='videoIDinput' name='youtubeID' placeholder='Youtube video ID'>";
-                echo "<button style='margin-left:5px;' type='submit' class='btn btn-default' method='post'>Add Video</button>";
-                echo "</div>";
-                echo "</form>";
             }
         ?>
+        <?php if ($id == $_SESSION['id']) echo "<a href='addVideo.php'>Add Video</a>"; ?>
         <form class='form-inline' method='post'>
             <div class='form-group'>
                 <input class='form-control' type='text' name='hashtag' placeholder='Filter by hashtag'>
@@ -245,14 +217,6 @@ for ($i = 0; $i < $rows; ++$i) {
 <?php
 function validate($data) {
   return htmlspecialchars(stripslashes(trim($data)));
-}
-function validYoutubeID($id){
-    $id = trim($id);
-    if (strlen($id) === 11){
-        $file = @file_get_contents('http://gdata.youtube.com/feeds/api/videos/'.$id);
-        return !!$file;
-    }
-    return false;
 }
 function displayVideo($index, $video) {
     $id = $_GET ? ($_GET['profID'] ? $_GET['profID'] : $_SESSION['id']) : $_SESSION['id'];

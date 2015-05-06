@@ -176,9 +176,10 @@ if ($_POST) {
     ?>
     </div>
     <div id="right"></div>
-   
-    *Add the ID found at the end of the link to your youtube video
-    (ex. the ID for https://www.youtube.com/watch?v=28TAdDu5L6U is 28TAdDu5L6U)
+        <center>
+            *Add the ID found at the end of the link to your youtube video
+            (ex. the ID for https://www.youtube.com/watch?v=28TAdDu5L6U is 28TAdDu5L6U)
+        </center>
 </body>
 
 
