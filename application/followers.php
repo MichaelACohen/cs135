@@ -25,7 +25,8 @@ if($_POST){
     <?php require_once 'includes.php' ?>
 </head>
 <body>
-    <?php require_once 'navBar.php' 
+    <?php require_once 'navBar.php' ?>
+    <?php
     //Find followers of you
     $query = "SELECT Users.display_name, Users.username, Users.id 
     FROM Follows, Users WHERE Follows.followeeID = '$id' 

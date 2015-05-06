@@ -43,7 +43,8 @@ if($_POST){
     <?php require_once 'includes.php' ?>
 </head>
 <body>
-    <?php require_once 'navBar.php' 
+    <?php require_once 'navBar.php' ?>
+    <?php
         //this query returns the username and display name for 
         //all the people that the current user is following
         $query = "SELECT Users.display_name, Users.id ,Users.username 
