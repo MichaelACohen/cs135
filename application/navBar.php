@@ -1,5 +1,5 @@
 <?php
-
+//Creates Navigation Bar at the top of the page
 $menu = array(
 	'home' => array('text' => 'Home', 'url' => 'home.php'),
 	'profile' => array('text' => 'My Profile', 'url' => 'profile.php'),

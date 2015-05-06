@@ -4,7 +4,7 @@ require_once '../database/db_info.php';
 $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
 $id = $_SESSION['id'];
-//same thing as following.php except with people following the user
+//Same code as following.php except with people following the user
 //Deals with POST data that allows you to follow back
 if($_POST){
     if(isset($_POST['tofollowID'])){
@@ -25,15 +25,17 @@ if($_POST){
     <?php require_once 'includes.php' ?>
 </head>
 <body>
-    <?php require_once 'navBar.php' ?>
-    <?php
+    <?php require_once 'navBar.php' 
     //Find followers of you
-    $query = "SELECT Users.display_name, Users.username, Users.id FROM Follows, Users WHERE Follows.followeeID = '$id' AND Users.id = Follows.followerID";
+    $query = "SELECT Users.display_name, Users.username, Users.id 
+    FROM Follows, Users WHERE Follows.followeeID = '$id' 
+    AND Users.id = Follows.followerID";
     $result = $conn->query($query);
     if (!$result) die($conn->error);
     $rows = $result->num_rows;
     echo "<div style='margin-left:10px;'>";
     if ($rows) {
+        //display followers
         $msg = $rows == 1 ? 'This is the 1 person following you!' : 'These are the ' . $rows . ' people following you!';
         echo '<p>'.$msg.'</p>';
         echo '<table style="border-collapse:separate;border-spacing:10px 10px;">';
@@ -65,7 +67,6 @@ if($_POST){
         echo '</table>';
     }
     else {
-        //no followers
         echo "You have no followers.";
     }
     echo "</div>";

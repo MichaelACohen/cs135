@@ -4,8 +4,8 @@ require_once '../database/db_info.php';
 $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
 $id = $_SESSION['id'];
-//this query should hopefully return the username and display name for 
-//all the people that the current user is following
+
+
 //add followers
 if($_POST){
     if(isset($_POST['toFollow'])){
@@ -43,12 +43,16 @@ if($_POST){
     <?php require_once 'includes.php' ?>
 </head>
 <body>
-	<?php require_once 'navBar.php' ?>           
-    <?php 
-        $query = "SELECT Users.display_name, Users.id ,Users.username FROM Follows, Users WHERE Follows.followerID = '$id' AND Users.id = Follows.followeeID";
+    <?php require_once 'navBar.php' 
+        //this query returns the username and display name for 
+        //all the people that the current user is following
+        $query = "SELECT Users.display_name, Users.id ,Users.username 
+        FROM Follows, Users WHERE Follows.followerID = '$id' 
+        AND Users.id = Follows.followeeID";
         $result = $conn->query($query);
         if (!$result) die($conn->error);
         $rows = $result->num_rows;
+        //display followers
         echo '<div style=\'margin-left:10px;>\'';
         if ($rows) {
             $msg = $rows == 1 ? 'This is the 1 person you are following!' : 'These are the ' . $rows . ' people you are following!';
@@ -61,7 +65,6 @@ if($_POST){
         		$username = $result->fetch_assoc()['username'];
                 $result->data_seek($i);
                 $followeeID=$result->fetch_assoc()['id'];
-                //display all the info in a table or something
                 echo '<tr><td><a href=\'profile.php?profID='.$followeeID.'\'>'.$display_name.'</a> ('.$username.')</td>';
                 echo "<form method='post'><input type='hidden' name='unfollowID' value='$followeeID'>";
                 echo '<td><button class=\'btn btn-default\' type=\'submit\'>Unfollow</button></td></form></tr>';
@@ -75,6 +78,7 @@ $result->close();
 $conn->close();
      
 ?>
+        <!--A form to allow users to follow other people by entering their username-->
         <form style="margin:5px;" method="post" >
             <table style="border-collapse:separate;border-spacing:10px 10px;">
                 <div class='form-group' style='display:inline-block;'>

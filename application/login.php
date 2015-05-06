@@ -26,7 +26,7 @@ if (isset($_SESSION['id'])) {
   } else if ($result->num_rows) {
     $row = $result->fetch_array(MYSQLI_NUM);
     $result->close();
-
+    //extra security in salt and peppering our passwords
     $salt      = "qm&h*";
     $pepper    = "pg!@";
     $encryptPW = hash('ripemd128', "$salt$password$pepper");

@@ -7,8 +7,7 @@ $id = $_SESSION['id'];
 ?>
 
 <?php
-
-//add videos from home page to profile pafe
+//Adds video to user's profile from add button on all videos
 if($_POST){
     if(isset($_POST['addID'])){
         $videoID = validate($_POST['addID']);
@@ -24,7 +23,6 @@ if($_POST){
             }
         }
     }
-       //ASK MICHAEL $resulta->close();
 }
 ?>
 
@@ -33,6 +31,11 @@ if($_POST){
 <head>
     <title>Home Page</title>
     <?php require_once 'includes.php' ?>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <style>
         #header {
             width:100%;
@@ -117,6 +120,7 @@ if($_POST){
 	<h2>Home Page</h2>
 	<p>Welcome to your home page, <?php echo $_SESSION['displayName']; ?>. </p>
     <center>
+    <!--Filters by hashtag-->
     <form class='form-inline' method='post'>
         <div class='form-group'>
             <input class='form-control' type='text' name='hashtag' placeholder='Filter by hashtag'>
@@ -129,14 +133,7 @@ if($_POST){
                 <center>
                 <table class="table table-bordered">
                 <?php
-<<<<<<< HEAD
-                    // select youtube id where you follow the users who have the video in their feed
-                    $query = "SELECT DISTINCT Videos.youtubeID, VideoFeed.datetime, Videos.vid, Users.display_name, Follows.followeeID 
-                    FROM Videos, VideoFeed, Follows, Users 
-                    WHERE Follows.followerID=$id AND VideoFeed.userID=Follows.followeeID 
-                    AND Videos.vid=VideoFeed.videoID AND Follows.followeeID=Users.id 
-                    ORDER BY VideoFeed.datetime DESC";
-=======
+                //Display videos of people you are following
                     if ($_POST && isset($_POST['hashtag'])) {
                         $tag = $_POST['hashtag'];
                         $hashtagQuery = "SELECT hid FROM Hashtags WHERE tag='$tag'";
@@ -157,10 +154,10 @@ if($_POST){
                         AND Videos.vid=VideoFeed.videoID AND Follows.followeeID=Users.id
                         ORDER BY VideoFeed.datetime DESC";
                     }
->>>>>>> bce5c9ba7f6466f4d515e797f1300da9243f6ab9
                     $result = $conn->query($query);
                     if (!$result) die($conn->error);
                     $rows = $result->num_rows;
+                //display results in a 3x3 table
                     if ($rows) {
                         for ($i = 0; $i < 9 && $i < $rows; ++$i) {
                             if($i%3==0){echo "<tr>";}
@@ -174,7 +171,6 @@ if($_POST){
                             $followeeID = $result->fetch_assoc()['followeeID'];
                             $result->data_seek($i);
                             $datetime = $result->fetch_assoc()['datetime'];
-                            //video display
                             echo "<th>Posted by <a href='profile.php?profID=".$followeeID."'>".$display_name."</a>";
                             echo "<right><form method=\"post\" style=\"display:inline; float:right;\"><input type='hidden' name='addID' value='$videoID'/>";
                             echo "<input type='submit' value='Add Video'/></form>";
@@ -182,7 +178,14 @@ if($_POST){
                             echo "Posted on ".$datetime."</th></right>";
                             if($i%3==2){echo "</tr>";}
                         }
+                        if($rows<3){ //keep spacing right if there are less that 3 videos
+                                for($j=$rows;$j<4;$j++){
+                                    echo"<div></div>"; // can't get something that is the same length as <iframe>! 
+                                }
+                                echo "</tr>";
+                            }
                     }
+            
                     $result->close();
                     $conn->close();
                     ?>

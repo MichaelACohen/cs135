@@ -6,8 +6,6 @@ GRANT ALL PRIVILEGES ON db.* to root@localhost IDENTIFIED BY 'michael';
 
 USE db;
 
-#added role just in case
-
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Videos;
 DROP TABLE IF EXISTS VideoFeed;

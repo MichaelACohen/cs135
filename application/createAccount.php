@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($row[0]) {
       echo "username already taken";
-      //show error message or something
     } else {
+    //For extra security, we salt and pepper our passwords
       $salt   = "qm&h*";
       $pepper = "pg!@";
       $encryptPW = hash('ripemd128', "$salt$password$pepper");
