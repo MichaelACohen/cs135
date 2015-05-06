@@ -180,9 +180,9 @@ for ($i = 0; $i < $rows; ++$i) {
         $(function() {
             $(".commentText").each(function() {
                 $(this).autoResize();
-                $('#left').height($('#middle').height());
-                $('#right').height($('#middle').height());
             });
+            $('#left').height($('#middle').height());
+            $('#right').height($('#middle').height());
         });
         function openWindow(names) {
             newWindow = window.open("", null, "height=200,width=400,status=yes,toolbar=no,menubar=no,location=no");
@@ -218,7 +218,7 @@ for ($i = 0; $i < $rows; ++$i) {
                 }
                 echo "<form class='form-inline' method='post'>";
                 echo "<div class='form-group'>";
-                echo "<input class='form-control' type='text' id='videoIDinput' name='youtubeID' placeholder='Youtube video ID...'>";
+                echo "<input class='form-control' type='text' id='videoIDinput' name='youtubeID' placeholder='Youtube video ID'>";
                 echo "<button style='margin-left:5px;' type='submit' class='btn btn-default' method='post'>Add Video</button>";
                 echo "</div>";
                 echo "</form>";
